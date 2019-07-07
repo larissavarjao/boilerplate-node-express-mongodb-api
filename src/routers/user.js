@@ -25,7 +25,7 @@ router.post("/users/login", async (req, res) => {
         const token = await user.generateAuthToken();
         res.send({ user, token });
     } catch (e) {
-        res.status(400);
+        res.status(400).send();
     }
 });
 
@@ -65,14 +65,13 @@ router.patch("/users/me", auth, async (req, res) => {
     }
 
     try {
-        // const user = await User.findById(req.params.);
         const user = req.user;
         updates.forEach((update) => user[update] = req.body[update]);
         await user.save();
 
         res.send(user);
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send();
     }
 });
 
